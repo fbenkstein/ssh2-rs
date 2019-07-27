@@ -36,7 +36,7 @@ before_script:
 
 script:
   - cargo build
-  - cargo test
+  - RUST_BACKTRACE=1 cargo test
   - rustdoc --test README.md -L target
   - cargo run --manifest-path systest/Cargo.toml
 
