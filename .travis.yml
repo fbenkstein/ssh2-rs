@@ -1,28 +1,28 @@
 language: rust
 sudo: required
+os: osx
 
-matrix:
-  include:
-    - rust: 1.26.0
-    - rust: stable
-    - os: osx
-      before_install:
-        - export OPENSSL_INCLUDE_DIR=`brew --prefix openssl`/include
-        - export OPENSSL_LIB_DIR=`brew --prefix openssl`/lib
-    - rust: beta
-    - rust: nightly
-
-    - name: "master doc to gh-pages"
-      rust: nightly
-      script:
-        - cargo doc --no-deps
-        - cargo doc --no-deps --manifest-path libssh2-sys/Cargo.toml
-      deploy:
-        provider: script
-        script: curl -LsSf https://git.io/fhJ8n | rustc - && (cd target/doc && ../../rust_out)
-        skip_cleanup: true
-        on:
-          branch: master
+# matrix:
+#   include:
+#     - rust: 1.26.0
+#     - rust: stable
+#       before_install:
+#         - export OPENSSL_INCLUDE_DIR=`brew --prefix openssl`/include
+#         - export OPENSSL_LIB_DIR=`brew --prefix openssl`/lib
+#     - rust: beta
+#     - rust: nightly
+# 
+#     - name: "master doc to gh-pages"
+#       rust: nightly
+#       script:
+#         - cargo doc --no-deps
+#         - cargo doc --no-deps --manifest-path libssh2-sys/Cargo.toml
+#       deploy:
+#         provider: script
+#         script: curl -LsSf https://git.io/fhJ8n | rustc - && (cd target/doc && ../../rust_out)
+#         skip_cleanup: true
+#         on:
+#           branch: master
 
 before_script:
   - ssh-keygen -t rsa -f ~/.ssh/id_rsa -N "" -q
